@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron')
+const ytdl = require('ytdl-core');
 
 function createWindow() {
     // 브라우저 창을 생성합니다.
