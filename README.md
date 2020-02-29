@@ -4,7 +4,7 @@ Youtube Music Streamer with Electron
 ## Notice
 ```
 YTStream is not a Offcial Youtube App.
-Developers of YTStream have officially no relation with YouTube and Google LLC.
+Developers of YTStream officially have no relation with YouTube and Google LLC.
 
 if you notice that this Program Infringes Copyright, Contact to us via email:
 
