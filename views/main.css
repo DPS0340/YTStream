@@ -7,6 +7,9 @@
     min-height: 100vh;
     margin-bottom: 0;
     padding-bottom: 0;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .container-fluid {
