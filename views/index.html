@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Viewport Init -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YTStream Player</title>
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
@@ -26,8 +28,21 @@
 </head>
 
 <body>
-    <div class="container">
-        <button type="button" class="btn btn-primary" id="button1">Button!</button>
+    <div class="jumbotron bg-light" id="wrapper">
+        <div class="vertical-center text-center container-fluid" id="main">
+            <button type="button" class="btn btn-primary" id="button1">Button!</button>
+        </div>
+        <footer class="footer font-small blue vertical-center text-center" id="footer">
+            <span class="lead">
+                    2020 YTStream<br>
+            </span>
+            <span>
+                <a href="https://github.com/DPS0340/YTStream" class="badge badge-secondary">GitHub</a>
+                <br>
+                <a href="https://github.com/DPS0340/YTStream" class="badge badge-primary">Contribute us!</a>
+            </span>
+        </footer>
+    </div>
     </div>
 </body>
 
