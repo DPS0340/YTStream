@@ -3,23 +3,47 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <!-- Viewport Init -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YTStream Player</title>
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <!-- Jquery Import -->
+    <script>
+        window.jQuery = window.$ = require('jquery');
+    </script>
+    <!-- Popper & Bootstrap Import -->
+    <script defer src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script defer src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- main CSS Import -->
+    <link rel="stylesheet" href="main.css">
+    <!-- React Import -->
+    <script>
+        const React = require('react')
+        const ReactDOM = require('react-dom')
+    </script>
+
+    <!-- index.js Import -->
+    <script src="index.js"></script>
 </head>
 
 <body>
-    <h1>Hello World!</h1>
-    We are using node
-    <script>
-        document.write(process.versions.node)
-    </script>, Chrome
-    <script>
-        document.write(process.versions.chrome)
-    </script>, and Electron
-    <script>
-        document.write(process.versions.electron)
-    </script>.
+    <div class="jumbotron bg-light" id="wrapper">
+        <div class="vertical-center text-center container-fluid" id="main">
+            <button type="button" class="btn btn-primary" id="button1">Button!</button>
+        </div>
+        <footer class="footer font-small blue vertical-center text-center" id="footer">
+            <span class="lead">
+                    2020 YTStream<br>
+            </span>
+            <span>
+                <a href="https://github.com/DPS0340/YTStream" class="badge badge-secondary">GitHub</a>
+                <br>
+                <a href="https://github.com/DPS0340/YTStream" class="badge badge-primary">Contribute us!</a>
+            </span>
+        </footer>
+    </div>
+    </div>
 </body>
 
 </html>

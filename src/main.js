@@ -1,21 +1,27 @@
 const { app, BrowserWindow } = require('electron')
-const ytdl = require('ytdl-core');
 
 function createWindow() {
     // 브라우저 창을 생성합니다.
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true
-        }
-    })
-
-    // and load the index.html of the app.
+            width: 800,
+            height: 600,
+            webPreferences: {
+                nodeIntegration: true
+            }
+        })
+        // and load the index.html of the app.
     win.loadFile('../views/index.html')
 
     // 개발자 도구를 엽니다.
     win.webContents.openDevTools()
+
+    win.webContents.once('dom-ready', () => {
+        // win.webContents
+        //   .send('sum-request', 23, 98, 3, 61)
+        // ipcMain.once('sum-reply', (event, sum) => {
+        //   doJobWithResult(sum)
+        // })
+    })
 }
 
 // 이 메소드는 Electron의 초기화가 완료되고
