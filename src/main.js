@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const youtube = require('./youtube');
+const youtube = require('./youtube')
 
 function createWindow () {
   // 브라우저 창을 생성합니다.
