@@ -37,5 +37,6 @@ const findByUrl = async (ref) => {
 
 const stream = (url) => {
   const yt = ytdl(url, {filter: 'audioonly'});
+  // audio stream with express server TODO
 }
 export { find, findByUrl }

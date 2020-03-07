@@ -36,17 +36,22 @@ ipcRenderer.on('youtube-search-result', (event, arg) => {
   ReactDOM.render(<MusicViewer result={arg}></MusicViewer>,
     document.getElementById('main')
   )
+  window.scroll({
+    top: 0, 
+    left: 0, 
+    behavior: 'smooth' 
+   });
 })
 
 class Music extends Component {
   render () {
     const e = this.props.elem
     return (
-      <div className="container border border-primary">
+      <div className="container">
         <div class="row">
           <div class="col-sm ml-0 pl-0">
             <a href={e.link}>
-              <img src={e.thumbnail} className="rounded float-left" style={{"height": "200px", "width": "100%", "object-fit": "contain"}}></img>
+              <img src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "object-fit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
             </a>
           </div>
           <div class="col-sm">
@@ -56,6 +61,7 @@ class Music extends Component {
         </div>
       </div>
     )
+    // audio stream TODO
   }
 }
 
