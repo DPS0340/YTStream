@@ -42,11 +42,11 @@ class Music extends Component {
   render () {
     const e = this.props.elem
     return (
-      <div className="container border border-primary">
+      <div className="container">
         <div class="row">
           <div class="col-sm ml-0 pl-0">
             <a href={e.link}>
-              <img src={e.thumbnail} className="rounded float-left" style={{"height": "200px", "width": "100%", "object-fit": "contain"}}></img>
+              <img src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "object-fit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
             </a>
           </div>
           <div class="col-sm">
