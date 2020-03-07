@@ -27,23 +27,49 @@ const searchBar = () => {
   find(val)
 }
 
+const searchQuery = (query) => {
+  ipcRenderer.send('youtube-search-query', query)
+}
+
 
 ipcRenderer.on('youtube-search-result', (event, arg) => {
-  console.log(arg)
+  ReactDOM.render(<MusicViewer result={arg}></MusicViewer>,
+    document.getElementById('main')
+  )
 })
 
 class Music extends Component {
-  <div>
-    
-  </div>
+  render () {
+    const e = this.props.elem
+    return (
+      <div className="border border-primary">
+        <p className="lead">{e.title}</p>
+        <a href={e.link} className="rounded float-left">
+          <img src={e.thumbnail}  style={{"width": "auto", "height": 195 + "px"}}></img>
+        </a>
+        <p className="lead">{e.duration}</p>
+      </div>
+    )
+  }
 }
 
 class MusicViewer extends Component {
   render () {
+    const elems = this.props.result.obj
+    const nextUrl = this.props.result.next
+    const items = []
+    for (const e of elems.items) {
+      items.push(
+        <Music elem={e}></Music>
+      )
+    }
+    items.push(
+      <button className="btn btn-primary" onClick={() => {searchQuery(nextUrl)}}>Next Page</button>
+    )
     return (
-      <p className='lead'>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis aut eum autem consectetur ratione placeat inventore nihil nemo dolor ex ipsam dolorem recusandae, ipsa nisi labore natus unde sapiente repellendus.
-      </p>
+      <div class="container">
+      {items}
+      </div>
     )
   }
 }
@@ -61,14 +87,14 @@ class Index extends Component {
 class Footer extends Component {
   render () {
     return (
-      <footer className='footer font-small blue vertical-center text-center' id='footer'>
+      <footer className='footer font-small blue vertical-center text-center'>
         <div className='lead'>
           2020 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
           Contributors.
-               </a><br />
-          <a href='https://github.com/DPS0340/YTStream/blob/master/LICENSE' style='color: inherit; text-decoration-color:blue;'>
+          </a><br></br>
+          <a href='https://github.com/DPS0340/YTStream/blob/master/LICENSE' style={{"color": "inherit", "textDecorationColor": "blue"}}>
             MIT License
-          </a><br />
+          </a><br></br>
         </div>
         <div>
           <a href='https://github.com/DPS0340/YTStream' className='badge badge-secondary'>
@@ -80,7 +106,7 @@ class Footer extends Component {
             <span className='h4 lead'>
               Contribute us!
             </span>
-          </a><br />
+          </a><br></br>
         </div>
       </footer>
     )
@@ -115,13 +141,13 @@ class Navbar extends Component {
 class Main extends Component {
   render () {
     return (
-    <div class='jumbotron bg-light' id='wrapper'>
+    <div className='jumbotron bg-light' id='wrapper'>
 
       {/* <!-- Navigation bar --> */}
       <div id='navbar-div' />
 
       {/* <!-- Main div --> */}
-      <div class='vertical-center text-center container' id='main' />
+      <div className='vertical-center text-center container' id='main' />
 
       {/* <!-- Footer --> */}
       <div id='footer-div' />
