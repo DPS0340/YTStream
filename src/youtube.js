@@ -34,4 +34,8 @@ const findByUrl = async (ref) => {
     console.log('find failed', err)
   }
 }
+
+const stream = (url) => {
+  const yt = ytdl(url, {filter: 'audioonly'});
+}
 export { find, findByUrl }
