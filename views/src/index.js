@@ -93,11 +93,11 @@ const renderIndex = () => {
   )
 }
 
-const renderMain = () => {
+const renderRoot = () => {
   ReactDOM.render(<Main />,
-    document.getElementById('main')
+    document.getElementById('root')
   )
   renderIndex()
 }
 
-renderMain()
+renderRoot()
