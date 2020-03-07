@@ -36,6 +36,11 @@ ipcRenderer.on('youtube-search-result', (event, arg) => {
   ReactDOM.render(<MusicViewer result={arg}></MusicViewer>,
     document.getElementById('main')
   )
+  window.scroll({
+    top: 0, 
+    left: 0, 
+    behavior: 'smooth' 
+   });
 })
 
 class Music extends Component {
