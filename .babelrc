@@ -1,3 +1,21 @@
 {
-    "presets": ["@babel/preset-env", "@babel/preset-react"]
+    "presets": [
+    ["@babel/preset-env", {
+      "debug": false,
+      "modules": false,
+      "useBuiltIns": false
+    }], 
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "@babel/plugin-transform-runtime",
+    [ "@babel/plugin-proposal-class-properties", { "loose": true } ],
+    "transform-async-to-generator"
+  ],
+  "env": {
+    "production": {
+      "presets": ["react-optimize"]
+    }
+  }
 }

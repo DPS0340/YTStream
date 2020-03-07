@@ -21,6 +21,4 @@ const find = async (name) => {
   }
 }
 
-(async () => {
-  console.log(await find('psyqui'))
-})()
+export { find }

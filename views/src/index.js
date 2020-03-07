@@ -2,7 +2,7 @@
 window.jQuery = window.$ = require('jquery')
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Electron from 'electron'
+import Electron, { ipcRenderer } from 'electron'
 import popper from '../../node_modules/popper.js/dist/umd/popper.min.js'
 import bootstrapjs from '../../node_modules/bootstrap/dist/js/bootstrap.min.js'
 import bootstrapcss from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -49,14 +49,38 @@ class Footer extends Component {
   }
 }
 
+ipcRenderer.on('youtube-search-result', (event, arg) => {
+    
+})
+
+
+/**
+ * send search keyword with ipcRenderer
+ */
+const find = (keyword) => {
+    ipcRenderer.send('youtube-search-perform', keyword)
+}
+
+const searchBar = () => {
+  const val = document.getElementById('Search-Form').innerText
+  if (!val) {
+    return
+  }
+  find(val)
+}
+
 class Navbar extends Component {
   render () {
     return (
       <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
-        <div className='navbar-header'>
+        <div className='nav navbar-nav navbar-left'>
           <a className='navbar-brand display-4' href={this.props.url} id='Navbar-Title'>
             {this.props.title}
           </a>
+        </div>
+        <div className='nav navbar-nav navbar-right d-inline'>
+          <input className="form-control mr-sm-2" type="search" placeholder="Search Youtube..." aria-label="Search" id="Search-Form" />
+          <button className="btn btn-outline-primary my-2 my-sm-0 lead" onClick={() => searchBar()}>Search!</button>
         </div>
       </nav>
     )

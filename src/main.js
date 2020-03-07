@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
+const youtube = require('./youtube');
 
 function createWindow () {
   // 브라우저 창을 생성합니다.
@@ -16,14 +17,6 @@ function createWindow () {
 
   // 개발자 도구를 엽니다.
   win.webContents.openDevTools()
-
-  win.webContents.once('dom-ready', () => {
-    // win.webContents
-    //   .send('sum-request', 23, 98, 3, 61)
-    // ipcMain.once('sum-reply', (event, sum) => {
-    //   doJobWithResult(sum)
-    // })
-  })
 }
 
 // 이 메소드는 Electron의 초기화가 완료되고
@@ -49,3 +42,8 @@ app.on('activate', () => {
 })
 
 // 이 파일에는 나머지 앱의 특정 주요 프로세스 코드를 포함시킬 수 있습니다. 별도의 파일에 추가할 수도 있으며 이 경우 require 구문이 필요합니다.
+
+ipcMain.on('youtube-search-perform', async (event, arg) => {
+  const result = await youtube.find(arg)
+  event.reply('youtube-search-result', result)
+})
