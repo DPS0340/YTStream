@@ -1,10 +1,16 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const Electron = require('electron')
+
+window.jQuery = window.$ = require('jquery')
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import Electron from 'electron'
+import popper from '../../node_modules/popper.js/dist/umd/popper.min.js'
+import bootstrapjs from '../../node_modules/bootstrap/dist/js/bootstrap.min.js'
+import bootstrapcss from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import css from '../main.css'
 
 console.log('Hello World!')
 
-class Index extends React.Component {
+class Index extends Component {
   render () {
     return (
       <p className='lead'>
@@ -14,7 +20,7 @@ class Index extends React.Component {
   }
 }
 
-class Footer extends React.Component {
+class Footer extends Component {
   render () {
     return (
       <footer className='footer font-small blue vertical-center text-center' id='footer'>
@@ -43,7 +49,7 @@ class Footer extends React.Component {
   }
 }
 
-class Navbar extends React.Component {
+class Navbar extends Component {
   render () {
     return (
       <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
@@ -53,6 +59,24 @@ class Navbar extends React.Component {
           </a>
         </div>
       </nav>
+    )
+  }
+}
+
+class Main extends Component {
+  render () {
+    return (
+    <div class='jumbotron bg-light' id='wrapper'>
+
+      {/* <!-- Navigation bar --> */}
+      <div id='navbar-div' />
+
+      {/* <!-- Main div --> */}
+      <div class='vertical-center text-center container' id='main' />
+
+      {/* <!-- Footer --> */}
+      <div id='footer-div' />
+    </div>
     )
   }
 }
@@ -69,4 +93,11 @@ const renderIndex = () => {
   )
 }
 
-renderIndex()
+const renderMain = () => {
+  ReactDOM.render(<Main />,
+    document.getElementById('main')
+  )
+  renderIndex()
+}
+
+renderMain()
