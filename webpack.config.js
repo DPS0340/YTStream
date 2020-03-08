@@ -61,5 +61,79 @@ module.exports = [
         template: './app/index.html'
       })
     ]
+  },
+  {
+    mode: 'development',
+    target: 'web',
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
+        },
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader']
+        }
+      ]
+    },
+    entry: './public/index.js',
+    resolve: {
+      extensions: ['.webpack.js', '.js']
+    },
+    output: {
+      path: __dirname + '/dist/public',
+      filename: 'index.js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'YTStream Audio Server',
+        minify: {
+          collapseWhitespace: true
+        },
+        hash: true,
+        template: './public/index.html'
+      })
+    ]
+  },
+  {
+    mode: 'development',
+    target: 'web',
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
+        },
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader']
+        }
+      ]
+    },
+    entry: './public/index.js',
+    resolve: {
+      extensions: ['.webpack.js', '.js']
+    },
+    output: {
+      path: __dirname + '/dist/public',
+      filename: 'index.js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'YTStream Audio Server',
+        minify: {
+          collapseWhitespace: true
+        },
+        hash: true,
+        template: './public/index.html'
+      })
+    ]
   }
 ]

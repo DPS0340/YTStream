@@ -194,9 +194,11 @@ class MusicViewer extends Component {
 class Index extends Component {
   render () {
     return (
-      <p className='lead'>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis aut eum autem consectetur ratione placeat inventore nihil nemo dolor ex ipsam dolorem recusandae, ipsa nisi labore natus unde sapiente repellendus.
-      </p>
+      <div>
+        <p className='lead'>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis aut eum autem consectetur ratione placeat inventore nihil nemo dolor ex ipsam dolorem recusandae, ipsa nisi labore natus unde sapiente repellendus.
+        </p>
+      </div>
     )
   }
 }
