@@ -159,6 +159,9 @@ class MusicPrevNext extends Component {
     } else {
       return (
         <div className="row mb-3">
+          <div className="col-sm text-left">
+            <button className="btn btn-dark">Previous Page</button>
+          </div>
           <div className="col-sm text-right">
             <button className="btn btn-primary" onClick={() => {queueFront(nextUrl)}}>Next Page</button>
           </div>
@@ -181,6 +184,7 @@ class MusicViewer extends Component {
     items.push(<MusicPrevNext nextUrl={nextUrl} />)
     return (
       <div className="container">
+      <p className="lead">{`${musicQueue[0].query} ${musicCursor} page`}</p>
       {items}
       </div>
     )
