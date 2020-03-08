@@ -48,8 +48,9 @@ ipcMain.on('youtube-search-perform', async (event, arg) => {
   event.reply('youtube-search-result', result)
 })
 
-
 ipcMain.on('youtube-search-query', async (event, arg) => {
   const result = await youtube.findByUrl(arg)
   event.reply('youtube-search-result', result)
 })
+
+const server = require('./server')
