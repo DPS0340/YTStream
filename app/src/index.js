@@ -106,19 +106,35 @@ class MusicThumbnail extends Component {
     const e = this.props.elem
     if (!this.state.showPlayer) {
       return (
-        <div className="col-sm ml-0 pl-0">
-          <img onClick={this.click} src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+        <div className="row">
+          <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
+            <img onClick={this.click} src={e.thumbnail} className="rounded float-left" style={{"height": "160px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+          </div>
+          <div className="col-sm">
+              <a href="#" onClick={this.click}><p className="lead">{e.title}</p></a>
+              <a href={e.link}>{e.link}</a>
+              <p className="lead">{e.duration}</p>
+            </div>
         </div>
+
       )
     } else {
       return (
-        <div className="col-sm ml-0 pl-0">
-          <img src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
-          <audio controls>
-            <source src={`https://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mpeg">
-            </source>
-          </audio>
+        <div className="row">
+          <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
+            <img src={e.thumbnail} onClick={this.click} className="rounded float-left" style={{"height": "160px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+            <audio controls autoPlay>
+              <source src={`http://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mpeg">
+              </source>
+            </audio>
+          </div>
+          <div className="col-sm">
+              <a href="#" onClick={this.click}><p className="lead">{e.title}</p></a>
+              <a href={e.link}>{e.link}</a>
+              <p className="lead">{e.duration}</p>
+            </div>
         </div>
+
       )
     }
   }
@@ -129,13 +145,8 @@ class Music extends Component {
     const e = this.props.elem
     return (
       <div className="container">
-        <div className="row">
           <MusicThumbnail elem={e} />
-          <div className="col-sm">
-            <a href={e.link}><p className="lead">{e.title}</p></a>
-            <p className="lead">{e.duration}</p>
-          </div>
-        </div>
+
       </div>
     )
     // audio stream TODO
@@ -194,9 +205,11 @@ class MusicViewer extends Component {
 class Index extends Component {
   render () {
     return (
-      <p className='lead'>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis aut eum autem consectetur ratione placeat inventore nihil nemo dolor ex ipsam dolorem recusandae, ipsa nisi labore natus unde sapiente repellendus.
-      </p>
+      <div>
+        <p className='lead'>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis aut eum autem consectetur ratione placeat inventore nihil nemo dolor ex ipsam dolorem recusandae, ipsa nisi labore natus unde sapiente repellendus.
+        </p>
+      </div>
     )
   }
 }
@@ -240,7 +253,7 @@ class Navbar extends Component {
     return (
       <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
         <div className='nav navbar-nav navbar-left'>
-          <a className='navbar-brand display-4' href={this.props.url} id='Navbar-Title'>
+          <a className='navbar-brand display-4' href="#" onClick={() => renderIndex()} id='Navbar-Title'>
             {this.props.title}
           </a>
         </div>

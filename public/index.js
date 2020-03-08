@@ -4,18 +4,21 @@ import ReactDOM from 'react-dom'
 import popper from 'popper.js/dist/umd/popper.min'
 import bootstrapjs from 'bootstrap/dist/js/bootstrap.min'
 import bootstrapcss from '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import css from '../app/main.css'
 
 console.log("hello world!")
 
 class Index extends Component {
   render () {
     return (
-      <p className='h1'>
-          Welcome to YTStream audio server!
-      </p>
-      <p className='lead'>
-          Please back to Electron app.
-      </p>
+      <div>
+        <p className='h1'>
+            Welcome to YTStream audio server!
+        </p>
+        <p className='lead'>
+            Please back to Electron app.
+        </p>
+      </div>
     )
   }
 }

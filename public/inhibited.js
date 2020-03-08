@@ -1,10 +1,10 @@
+window.jQuery = window.$ = require('jquery')
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import popper from 'popper.js/dist/umd/popper.min'
 import bootstrapjs from 'bootstrap/dist/js/bootstrap.min'
 import bootstrapcss from '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-window.jQuery = window.$ = require('jquery')
-
+import css from '../app/main.css'
 
 console.log("hello world!")
 
