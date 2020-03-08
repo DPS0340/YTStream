@@ -35,7 +35,12 @@ app.get('/' , (req, res) => {
 
 
 app.get('/watch/:query', (req, res) => {
-  console.log(req.params)
+    const query = req.params.query
+    const url = `https://www.youtube.com/watch?v=${query}`
+    const yt = ytdl(url, { filter: 'audioonly' })
+    res.setHeader('Content-Type', 'audio/mpeg')
+    res.status(200)
+    yt.pipe(res)
 })
 
 app.listen(port, () => console.log(`YTStream audio server listening on port ${port}!`))
