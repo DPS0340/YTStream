@@ -3,8 +3,8 @@ window.jQuery = window.$ = require('jquery')
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Electron, { ipcRenderer } from 'electron'
-import popper from '../../node_modules/popper.js/dist/umd/popper.min.js'
-import bootstrapjs from '../../node_modules/bootstrap/dist/js/bootstrap.min.js'
+import popper from 'popper.js/dist/umd/popper.min'
+import bootstrapjs from 'bootstrap/dist/js/bootstrap.min'
 import bootstrapcss from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import css from '../main.css'
 
@@ -115,7 +115,7 @@ class MusicThumbnail extends Component {
         <div className="col-sm ml-0 pl-0">
           <img src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
           <audio controls>
-            <source src="https://localhost:8889/audio.mp3" type="audio/mpeg">
+            <source src={`https://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mpeg">
             </source>
           </audio>
         </div>

@@ -1,6 +1,5 @@
 'use strict'
 
-const ytdl = require('ytdl-core')
 const ytsr = require('ytsr')
 
 /**
@@ -16,7 +15,7 @@ const find = async (name) => {
     }
     console.log(filter.ref)
     const val = await ytsr(null, options)
-    return { "obj": val, "next": val.nextpageRef }
+    return { obj: val, next: val.nextpageRef }
   } catch (err) {
     console.log('find failed', err)
   }
@@ -29,14 +28,10 @@ const findByUrl = async (ref) => {
       nextpageRef: `https://youtube.com${ref}`
     }
     const val = await ytsr(null, options)
-    return { "obj": val, "next": val.nextpageRef }
+    return { obj: val, next: val.nextpageRef }
   } catch (err) {
     console.log('find failed', err)
   }
 }
 
-const stream = (url) => {
-  const yt = ytdl(url, {filter: 'audioonly'});
-  // audio stream with express server TODO
-}
 export { find, findByUrl }

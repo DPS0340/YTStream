@@ -43,7 +43,7 @@ module.exports = [
         }
       ]
     },
-    entry: './views/src/index.js',
+    entry: './app/src/index.js',
     resolve: {
       extensions: ['.webpack.js', '.js']
     },
@@ -58,7 +58,7 @@ module.exports = [
           collapseWhitespace: true
         },
         hash: true,
-        template: './views/index.html'
+        template: './app/index.html'
       })
     ]
   }
