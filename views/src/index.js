@@ -10,11 +10,22 @@ import css from '../main.css'
 
 console.log('Hello World!')
 
+Array.prototype.clear = function() {
+  this.splice(0, this.length);
+}
+
+let musicQueue = []
+let musicCursor = musicQueue.length
+
+
+
 /**
  * send search keyword with ipcRenderer
  */
 const find = (keyword) => {
   ipcRenderer.send('youtube-search-perform', keyword)
+  musicQueue = [ { query: keyword } ]
+  musicCursor = musicQueue.length
 }
 
 const searchBar = () => {
@@ -29,10 +40,38 @@ const searchBar = () => {
 
 const searchQuery = (query) => {
   ipcRenderer.send('youtube-search-query', query)
+  musicQueue.push({ query })
+  musicCursor = musicQueue.length
+}
+
+const hasFront = () => {
+  return musicCursor < musicQueue.length
+}
+
+const queueFront = (query) => {
+  if (hasFront()) {
+    console.log("cached Front")
+    showSearchResult(musicQueue[musicCursor++])
+  } else {
+    searchQuery(query)
+  }
+}
+
+const hasBack = () => {
+  return musicCursor >= 2
+}
+
+const queueBack = () => {
+  if (hasBack()) {
+    console.log("cached Back")
+    showSearchResult(musicQueue[--musicCursor])
+  } else {
+    return
+  }
 }
 
 
-ipcRenderer.on('youtube-search-result', (event, arg) => {
+const showSearchResult = (arg) => {
   ReactDOM.render(<MusicViewer result={arg}></MusicViewer>,
     document.getElementById('main')
   )
@@ -40,21 +79,59 @@ ipcRenderer.on('youtube-search-result', (event, arg) => {
     top: 0, 
     left: 0, 
     behavior: 'smooth' 
-   });
+   })
+}
+
+ipcRenderer.on('youtube-search-result', (event, arg) => {
+  showSearchResult(arg)
+  const queryonly = musicQueue[musicQueue.length-1]
+  musicQueue[musicQueue.length-1] = { ...queryonly, ...arg };
 })
+
+class MusicThumbnail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPlayer : false
+    }
+
+    this.click = this.click.bind(this)
+  }
+
+  click () {
+    this.setState({ showPlayer : true })
+  }
+
+  render () {
+    const e = this.props.elem
+    if (!this.state.showPlayer) {
+      return (
+        <div className="col-sm ml-0 pl-0">
+          <img onClick={this.click} src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+        </div>
+      )
+    } else {
+      return (
+        <div className="col-sm ml-0 pl-0">
+          <img src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+          <audio controls>
+            <source src="https://localhost:8889/audio.mp3" type="audio/mpeg">
+            </source>
+          </audio>
+        </div>
+      )
+    }
+  }
+}
 
 class Music extends Component {
   render () {
     const e = this.props.elem
     return (
       <div className="container">
-        <div class="row">
-          <div class="col-sm ml-0 pl-0">
-            <a href={e.link}>
-              <img src={e.thumbnail} className="rounded float-left" style={{"height": "195px", "width": "100%", "object-fit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
-            </a>
-          </div>
-          <div class="col-sm">
+        <div className="row">
+          <MusicThumbnail elem={e} />
+          <div className="col-sm">
             <a href={e.link}><p className="lead">{e.title}</p></a>
             <p className="lead">{e.duration}</p>
           </div>
@@ -62,6 +139,32 @@ class Music extends Component {
       </div>
     )
     // audio stream TODO
+  }
+}
+
+class MusicPrevNext extends Component {
+  render () {
+    const nextUrl = this.props.nextUrl
+    if (hasBack()) {
+      return (
+        <div className="row mb-3">
+          <div className="col-sm text-left">
+            <button className="btn btn-success" onClick={() => {queueBack()}}>Previous Page</button>
+          </div>
+          <div className="col-sm text-right">
+            <button className="btn btn-primary" onClick={() => {queueFront(nextUrl)}}>Next Page</button>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="row mb-3">
+          <div className="col-sm text-right">
+            <button className="btn btn-primary" onClick={() => {queueFront(nextUrl)}}>Next Page</button>
+          </div>
+        </div>
+      )
+    }
   }
 }
 
@@ -75,11 +178,9 @@ class MusicViewer extends Component {
         <Music elem={e}></Music>
       )
     }
-    items.push(
-      <button className="btn btn-primary" onClick={() => {searchQuery(nextUrl)}}>Next Page</button>
-    )
+    items.push(<MusicPrevNext nextUrl={nextUrl} />)
     return (
-      <div class="container">
+      <div className="container">
       {items}
       </div>
     )
@@ -99,7 +200,7 @@ class Index extends Component {
 class Footer extends Component {
   render () {
     return (
-      <footer className='footer font-small blue vertical-center text-center'>
+      <footer className='footer font-small blue vertical-center text-center fixed-bottom'>
         <div className='lead'>
           2020 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
           Contributors.
