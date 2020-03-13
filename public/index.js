@@ -1,12 +1,12 @@
-window.jQuery = window.$ = require('jquery')
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import popper from 'popper.js/dist/umd/popper.min'
 import bootstrapjs from 'bootstrap/dist/js/bootstrap.min'
 import bootstrapcss from '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import css from '../app/main.css'
+window.jQuery = window.$ = require('jquery')
 
-console.log("hello world!")
+console.log('hello world!')
 
 class Index extends Component {
   render () {
@@ -22,32 +22,32 @@ class Index extends Component {
     )
   }
 }
-  
+
 class Footer extends Component {
   render () {
     return (
-        <footer className='footer font-small blue vertical-center text-center fixed-bottom'>
+      <footer className='footer font-small blue vertical-center text-center fixed-bottom'>
         <div className='lead'>
             2020 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
             Contributors.
-            </a><br></br>
-            <a href='https://github.com/DPS0340/YTStream/blob/master/LICENSE' style={{"color": "inherit", "textDecorationColor": "blue"}}>
+                 </a><br />
+          <a href='https://github.com/DPS0340/YTStream/blob/master/LICENSE' style={{ color: 'inherit', textDecorationColor: 'blue' }}>
             MIT License
-            </a><br></br>
+          </a><br />
         </div>
         <div>
-            <a href='https://github.com/DPS0340/YTStream' className='badge badge-secondary'>
+          <a href='https://github.com/DPS0340/YTStream' className='badge badge-secondary'>
             <span className='h4 lead'>
                 GitHub
             </span>
-            </a>
-            <a href='https://github.com/DPS0340/YTStream' className='badge badge-primary'>
+          </a>
+          <a href='https://github.com/DPS0340/YTStream' className='badge badge-primary'>
             <span className='h4 lead'>
                 Contribute us!
             </span>
-            </a><br></br>
+          </a><br />
         </div>
-        </footer>
+      </footer>
     )
   }
 }
@@ -55,13 +55,13 @@ class Footer extends Component {
 class Navbar extends Component {
   render () {
     return (
-        <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
+      <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
         <div className='nav navbar-nav navbar-left'>
-            <a className='navbar-brand display-4' href={this.props.url} id='Navbar-Title'>
+          <a className='navbar-brand display-4' href={this.props.url} id='Navbar-Title'>
             {this.props.title}
-            </a>
+          </a>
         </div>
-        </nav>
+      </nav>
     )
   }
 }
@@ -69,7 +69,7 @@ class Navbar extends Component {
 class Main extends Component {
   render () {
     return (
-    <div className='jumbotron bg-light' id='wrapper'>
+      <div className='jumbotron bg-light' id='wrapper'>
 
         {/* <!-- Navigation bar --> */}
         <div id='navbar-div' />
@@ -79,7 +79,7 @@ class Main extends Component {
 
         {/* <!-- Footer --> */}
         <div id='footer-div' />
-    </div>
+      </div>
     )
   }
 }
