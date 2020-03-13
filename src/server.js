@@ -47,7 +47,7 @@ app.get('/download/:query', (req, res) => {
     setProgressBar()
     yt
         .pipe(res)
-        .on('end', () => {
+        .on('finish', () => {
             endProgressBar()
         })
 
