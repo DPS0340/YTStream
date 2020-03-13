@@ -138,7 +138,7 @@ class MusicThumbnail extends Component {
         <div className="row">
           <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
             <img src={e.thumbnail} onClick={this.click} className="rounded float-left" style={{"height": "180px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
-            <audio controls autoPlay preload="auto" disablepictureinpicture controlslist="download">
+            <audio controls autoPlay preload="auto" disablePictureInPicture controlsList="nodownload">
               <source src={`http://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mp3">
               </source>
               Your browser does not support the audio element.
