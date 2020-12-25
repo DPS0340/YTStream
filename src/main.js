@@ -33,13 +33,24 @@ app.on('activate', () => {
 })
 
 
-ipcMain.on('youtube-search-perform', async (event, arg) => {
-  const result = await youtube.find(arg)
-  event.reply('youtube-search-result', result)
+ipcMain.on('youtube-search-perform', async(event, arg) => {
+    const result = await youtube.find(arg)
+    event.reply('youtube-search-result', result)
 })
 
-ipcMain.on('youtube-search-query', async (event, arg) => {
-  const result = await youtube.findByUrl(arg)
-  event.reply('youtube-search-result', result)
+ipcMain.on('youtube-search-query', async(event, arg) => {
+    const result = await youtube.findByUrl(arg)
+    event.reply('youtube-search-result', result)
 })
 
+const setProgressBar = () => {
+    mainWin.setProgressBar(2) // intermediate mode
+}
+
+const endProgressBar = () => {
+    mainWin.setProgressBar(-1) // end progress bar
+}
+
+const server = require('./server')
+
+export { setProgressBar, endProgressBar }

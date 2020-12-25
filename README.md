@@ -11,3 +11,13 @@ if you notice that this Program Infringes Copyright, Contact to us via Email:
 jiholee@kpu.ac.kr
 optional.int@kakao.com
 ```
+## Setup
+```bash
+git clone https://github.com/DPS0340/YTStream
+cd YTStream
+npm install
+```
+## Usage
+```bash
+npm start
+```

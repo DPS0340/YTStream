@@ -1,16 +1,17 @@
 const express = require('express')
 const ytdl = require('ytdl-core')
-const path = require('path')
+const sanitize = require("sanitize-filename")
+import { setProgressBar, endProgressBar } from './main'
 
 const localhostOnly = (req, res, next) => {
     const localhost = ['127.0.0.1', 'localhost']
-  
+
     if (localhost.filter(e => req.get('host').includes(e)).length > 0) {
-      // console.log('localhost allowed')
-      next()
+        // console.log('localhost allowed')
+        next()
     } else {
-      console.log('External Access not allowed')
-      res.render('inhibited.html')
+        console.log('External Access not allowed')
+        res.render('inhibited.html')
     }
 }
 
@@ -24,23 +25,34 @@ app.engine('html', require('ejs').renderFile)
 
 app.use(localhostOnly)
 
-const stream = (url) => {
-  const yt = ytdl(url, { filter: 'audioonly' })
-  // audio stream with express server TODO
-}
-
-app.get('/' , (req, res) => {
+app.get('/', (req, res) => {
     res.render('index.html')
 })
-
 
 app.get('/watch/:query', (req, res) => {
     const query = req.params.query
     const url = `https://www.youtube.com/watch?v=${query}`
-    const yt = ytdl(url, { filter: 'audioonly' })
-    res.setHeader('Content-Type', 'audio/mpeg')
-    res.status(200)
-    yt.pipe(res)
+
+    res.attachment(`${query}.mp3`)
+    ytdl(url, { filter: 'audioonly', quality: 'highestaudio' }).pipe(res)
 })
 
-app.listen(port, () => console.log(`YTStream audio server listening on port ${port}!`))
+
+app.get('/download/:query', (req, res) => {
+    const query = req.params.query
+    const url = `https://www.youtube.com/watch?v=${query}`
+    const yt = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' })
+
+    res.attachment(`${query}.mp3`)
+    setProgressBar()
+    yt
+        .pipe(res)
+        .on('finish', () => {
+            endProgressBar()
+        })
+
+})
+
+
+app.listen(port, () => console.log(`
+                    YTStream audio server listening on port $ { port }!`))

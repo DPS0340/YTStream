@@ -14,8 +14,9 @@ Array.prototype.clear = function() {
   this.splice(0, this.length);
 }
 
-let musicQueue = []
-let musicCursor = musicQueue.length
+let musicQueue = {}
+let musicCursor = 0
+let currentKeyword = ""
 
 
 
@@ -23,9 +24,15 @@ let musicCursor = musicQueue.length
  * send search keyword with ipcRenderer
  */
 const find = (keyword) => {
-  ipcRenderer.send('youtube-search-perform', keyword)
-  musicQueue = [ { query: keyword } ]
-  musicCursor = musicQueue.length
+  musicCursor = 1
+  currentKeyword = keyword
+  if(!musicQueue[keyword]) {
+    ipcRenderer.send('youtube-search-perform', keyword)
+    musicQueue[keyword] = [ { query: keyword } ]
+  } else {
+    console.log("cached Keyword")
+    showSearchResult(musicQueue[keyword][0])
+  }
 }
 
 const searchBar = () => {
@@ -40,18 +47,18 @@ const searchBar = () => {
 
 const searchQuery = (query) => {
   ipcRenderer.send('youtube-search-query', query)
-  musicQueue.push({ query })
-  musicCursor = musicQueue.length
+  musicQueue[currentKeyword].push({ query })
+  musicCursor = musicQueue[currentKeyword].length
 }
 
 const hasFront = () => {
-  return musicCursor < musicQueue.length
+  return musicCursor < musicQueue[currentKeyword].length
 }
 
 const queueFront = (query) => {
   if (hasFront()) {
     console.log("cached Front")
-    showSearchResult(musicQueue[musicCursor++])
+    showSearchResult(musicQueue[currentKeyword][musicCursor++])
   } else {
     searchQuery(query)
   }
@@ -64,7 +71,8 @@ const hasBack = () => {
 const queueBack = () => {
   if (hasBack()) {
     console.log("cached Back")
-    showSearchResult(musicQueue[--musicCursor])
+    console.log(musicQueue[currentKeyword])
+    showSearchResult(musicQueue[currentKeyword][--musicCursor])
   } else {
     return
   }
@@ -84,8 +92,8 @@ const showSearchResult = (arg) => {
 
 ipcRenderer.on('youtube-search-result', (event, arg) => {
   showSearchResult(arg)
-  const queryonly = musicQueue[musicQueue.length-1]
-  musicQueue[musicQueue.length-1] = { ...queryonly, ...arg };
+  const queryonly = musicQueue[currentKeyword][musicQueue[currentKeyword].length-1]
+  musicQueue[currentKeyword][musicQueue[currentKeyword].length-1] = { ...queryonly, ...arg };
 })
 
 class MusicThumbnail extends Component {
@@ -99,21 +107,28 @@ class MusicThumbnail extends Component {
   }
 
   click () {
-    this.setState({ showPlayer : true })
+    if(this.state.showPlayer === false) {
+      this.setState({ showPlayer : true })
+    } else {
+      this.setState({ showPlayer : false })
+      
+    }
   }
-
   render () {
     const e = this.props.elem
     if (!this.state.showPlayer) {
       return (
         <div className="row">
           <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
-            <img onClick={this.click} src={e.thumbnail} className="rounded float-left" style={{"height": "160px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+            <img onClick={this.click} src={e.thumbnail} className="rounded float-left" style={{"height": "250px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
           </div>
           <div className="col-sm">
               <a href="#" onClick={this.click}><p className="lead">{e.title}</p></a>
               <a href={e.link}>{e.link}</a>
               <p className="lead">{e.duration}</p>
+              <a className="btn btn-success" href={`http://localhost:8890/download/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} download={`${e.link.replace("https://www.youtube.com/watch?v=", "")}.mp3`}>
+                다운로드
+              </a>
             </div>
         </div>
 
@@ -122,16 +137,20 @@ class MusicThumbnail extends Component {
       return (
         <div className="row">
           <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
-            <img src={e.thumbnail} onClick={this.click} className="rounded float-left" style={{"height": "160px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
-            <audio controls autoPlay>
-              <source src={`http://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mpeg">
+            <img src={e.thumbnail} onClick={this.click} className="rounded float-left" style={{"height": "180px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+            <audio controls autoPlay preload="auto" disablePictureInPicture controlsList="nodownload">
+              <source src={`http://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mp3">
               </source>
+              Your browser does not support the audio element.
             </audio>
           </div>
           <div className="col-sm">
               <a href="#" onClick={this.click}><p className="lead">{e.title}</p></a>
               <a href={e.link}>{e.link}</a>
               <p className="lead">{e.duration}</p>
+              <a className="btn btn-success" href={`http://localhost:8890/download/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} download={`${e.link.replace("https://www.youtube.com/watch?v=", "")}.mp3`}>
+                다운로드
+              </a>
             </div>
         </div>
 
@@ -149,7 +168,6 @@ class Music extends Component {
 
       </div>
     )
-    // audio stream TODO
   }
 }
 
@@ -195,7 +213,7 @@ class MusicViewer extends Component {
     items.push(<MusicPrevNext nextUrl={nextUrl} />)
     return (
       <div className="container">
-      <p className="lead">{`${musicQueue[0].query} ${musicCursor} page`}</p>
+      <p className="lead">{`${musicQueue[currentKeyword][0].query} ${musicCursor} page`}</p>
       {items}
       </div>
     )
