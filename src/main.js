@@ -1,7 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const youtube = require('./youtube')
-const server = require('./server')
-
 
 function createWindow () {
   const win = new BrowserWindow({
