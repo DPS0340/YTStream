@@ -45,7 +45,7 @@
         "webpack": "^4.44.2",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0",
-        "ytdl-core": "^2.1.7",
+        "ytdl-core": "^4.2.1",
         "ytsr": "^3.2.1"
     },
     "dependencies": {

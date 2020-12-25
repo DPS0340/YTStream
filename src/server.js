@@ -28,12 +28,13 @@ app.get('/', (req, res) => {
     res.render('index.html')
 })
 
+const options = { filter: 'audioonly', quality: 'highestaudio' }
+
 app.get('/watch/:query', (req, res) => {
     const query = req.params.query
     const url = `https://www.youtube.com/watch?v=${query}`
-
-    res.attachment(`${query}.mp3`)
-    ytdl(url, { filter: 'audioonly', quality: 'highestaudio' }).pipe(res)
+    console.log(url)
+    ytdl(url, options).pipe(res)
 })
 
 
