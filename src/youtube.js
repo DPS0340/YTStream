@@ -15,7 +15,7 @@ const find = async (name) => {
     }
     console.log(filter.url)
     const val = await ytsr(filter.url, options)
-    return { obj: val, next: val.continuation }
+    return { obj: val.items, next: val.continuation }
   } catch (err) {
     console.log('find failed', err)
   }
@@ -25,7 +25,7 @@ const findByUrl = async (continuation) => {
   try {
     const val = await ytsr.continueReq(continuation)
     console.log(val)
-    return { obj: val, next: val.continuation }
+    return { obj: val.items, next: val.continuation }
   } catch (err) {
     console.log('find failed', err)
   }

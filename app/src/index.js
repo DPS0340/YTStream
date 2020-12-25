@@ -72,7 +72,7 @@ const queueBack = () => {
   if (hasBack()) {
     console.log("cached Back")
     console.log(musicQueue[currentKeyword])
-    showSearchResult(musicQueue[currentKeyword][--musicCursor])
+    showSearchResult(musicQueue[currentKeyword][--musicCursor - 1])
   } else {
     return
   }
@@ -80,6 +80,7 @@ const queueBack = () => {
 
 
 const showSearchResult = (arg) => {
+  console.log("arg:", arg)
   ReactDOM.render(<MusicViewer result={arg}></MusicViewer>,
     document.getElementById('main')
   )
@@ -212,7 +213,7 @@ class MusicViewer extends Component {
     const elems = this.props.result.obj
     const nextUrl = this.props.result.next
     console.log(elems)
-    const items = elems.items.map((e, idx) => <Music elem={e} key={idx}></Music>)
+    const items = elems.map((e, idx) => <Music elem={e} key={idx}></Music>)
     items.push(<MusicPrevNext nextUrl={nextUrl} key="next" />)
     return (
       <div className="container">

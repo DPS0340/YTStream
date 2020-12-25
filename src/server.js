@@ -41,7 +41,7 @@ app.get('/watch/:query', (req, res) => {
 app.get('/download/:query', (req, res) => {
     const query = req.params.query
     const url = `https://www.youtube.com/watch?v=${query}`
-    const yt = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' })
+    const yt = ytdl(url, options)
 
     res.attachment(`${query}.mp3`)
     setProgressBar()
