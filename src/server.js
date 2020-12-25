@@ -52,5 +52,5 @@ app.get('/download/:query', (req, res) => {
 })
 
 
-app.listen(port, () => console.log(`
+app.listen(port, "0.0.0.0", () => console.log(`
                     YTStream audio server listening on port $ { port }!`))
