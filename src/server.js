@@ -45,8 +45,7 @@ app.get('/download/:query', (req, res) => {
 
     res.attachment(`${query}.mp3`)
     setProgressBar()
-    yt
-        .pipe(res)
+    yt.pipe(res)
         .on('finish', () => {
             endProgressBar()
         })
