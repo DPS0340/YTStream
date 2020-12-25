@@ -10,7 +10,7 @@ const find = async (name) => {
     let filter = await ytsr.getFilters(name)
     filter = filter.get('Type').get('Video')
     const options = {
-      limits: 5
+      limit: 5
     }
     console.log(filter.url)
     const val = await ytsr(filter.url, options)
