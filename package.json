@@ -46,7 +46,7 @@
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0",
         "ytdl-core": "^2.1.7",
-        "ytsr": "^0.1.21"
+        "ytsr": "^3.2.1"
     },
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.12.1",

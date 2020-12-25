@@ -8,27 +8,24 @@ const ytsr = require('ytsr')
 const find = async (name) => {
   try {
     let filter = await ytsr.getFilters(name)
-    filter = filter.get('Type').find(o => o.name === 'Video')
+    filter = filter.get('Type').get('Video')
     const options = {
-      limit: 5,
-      nextpageRef: filter.ref
+      limits: 5
     }
-    console.log(filter.ref)
-    const val = await ytsr(null, options)
-    return { obj: val, next: val.nextpageRef }
+    console.log(filter.url)
+    const val = await ytsr(filter.url, options)
+    console.log(val)
+    return { obj: val, next: val.continuation }
   } catch (err) {
     console.log('find failed', err)
   }
 }
 
-const findByUrl = async (ref) => {
+const findByUrl = async (continuation) => {
   try {
-    const options = {
-      limit: 5,
-      nextpageRef: `https://youtube.com${ref}`
-    }
-    const val = await ytsr(null, options)
-    return { obj: val, next: val.nextpageRef }
+    const val = await ytsr.continueReq(continuation)
+    console.log(val)
+    return { obj: val, next: val.continuation }
   } catch (err) {
     console.log('find failed', err)
   }
