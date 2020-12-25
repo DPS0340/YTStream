@@ -1,6 +1,5 @@
 const express = require('express')
 const ytdl = require('ytdl-core')
-const sanitize = require("sanitize-filename")
 import { setProgressBar, endProgressBar } from './main'
 
 const localhostOnly = (req, res, next) => {
