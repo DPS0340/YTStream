@@ -116,17 +116,24 @@ class MusicThumbnail extends Component {
   }
   render () {
     const e = this.props.elem
+    const replacedLink = e.url.replace("https://www.youtube.com/watch?v=", "")
+    const downloadUrl = `http://localhost:8890/download/${replacedLink}`
+    const downloadMp3Url = `${downloadUrl}.mp3`
+    const thumbnailStyle = {"height": "250px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}
+    const thumbnailUrl = e.bestThumbnail.url
+    const watchUrl = `http://localhost:8890/watch/${replacedLink}`
+    const showThumbnailStyle = {"height": "180px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}
     if (!this.state.showPlayer) {
       return (
         <div className="row">
           <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
-            <img onClick={this.click} src={e.thumbnail} className="rounded float-left" style={{"height": "250px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+            <img onClick={this.click} src={thumbnailUrl} className="rounded float-left" style={thumbnailStyle}></img>
           </div>
           <div className="col-sm">
               <a href="#" onClick={this.click}><p className="lead">{e.title}</p></a>
               <a href={e.link}>{e.link}</a>
               <p className="lead">{e.duration}</p>
-              <a className="btn btn-success" href={`http://localhost:8890/download/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} download={`${e.link.replace("https://www.youtube.com/watch?v=", "")}.mp3`}>
+              <a className="btn btn-success" href={downloadUrl} download={downloadMp3Url}>
                 다운로드
               </a>
             </div>
@@ -137,9 +144,9 @@ class MusicThumbnail extends Component {
       return (
         <div className="row">
           <div className="col-sm ml-0 pl-0" style={{"height": "250px"}}>
-            <img src={e.thumbnail} onClick={this.click} className="rounded float-left" style={{"height": "180px", "width": "100%", "objectFit": "contain", "marginTop": "5px", "marginBottom": "5px"}}></img>
+            <img src={thumbnailUrl} onClick={this.click} className="rounded float-left" style={showThumbnailStyle}></img>
             <audio controls autoPlay preload="auto" disablePictureInPicture controlsList="nodownload">
-              <source src={`http://localhost:8890/watch/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} type="audio/mp3">
+              <source src={watchUrl} type="audio/mp3">
               </source>
               Your browser does not support the audio element.
             </audio>
@@ -148,7 +155,7 @@ class MusicThumbnail extends Component {
               <a href="#" onClick={this.click}><p className="lead">{e.title}</p></a>
               <a href={e.link}>{e.link}</a>
               <p className="lead">{e.duration}</p>
-              <a className="btn btn-success" href={`http://localhost:8890/download/${e.link.replace("https://www.youtube.com/watch?v=", "")}`} download={`${e.link.replace("https://www.youtube.com/watch?v=", "")}.mp3`}>
+              <a className="btn btn-success" href={downloadUrl} download={downloadMp3Url}>
                 다운로드
               </a>
             </div>
@@ -204,13 +211,9 @@ class MusicViewer extends Component {
   render () {
     const elems = this.props.result.obj
     const nextUrl = this.props.result.next
-    const items = []
-    for (const e of elems.items) {
-      items.push(
-        <Music elem={e}></Music>
-      )
-    }
-    items.push(<MusicPrevNext nextUrl={nextUrl} />)
+    console.log(elems)
+    const items = elems.items.map((e, idx) => <Music elem={e} key={idx}></Music>)
+    items.push(<MusicPrevNext nextUrl={nextUrl} key="next" />)
     return (
       <div className="container">
       <p className="lead">{`${musicQueue[currentKeyword][0].query} ${musicCursor} page`}</p>
