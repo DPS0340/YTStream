@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
     res.render('index.html')
 })
 
-const options = { filter: 'audioonly', quality: 'highestaudio' }
+const options = { filter: 'audioonly', quality: 'highestaudio', format: 'mp3' }
 
 app.get('/watch/:query', (req, res) => {
     const query = req.params.query
@@ -43,7 +43,7 @@ app.get('/download/:query', (req, res) => {
     const url = `https://www.youtube.com/watch?v=${query}`
     const yt = ytdl(url, options)
 
-    res.attachment(`${query}.mp3`)
+    res.header("Content-Disposition", `attachment;  filename="${query}.mp3"`)
     setProgressBar()
     yt.pipe(res)
         .on('finish', () => {

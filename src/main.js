@@ -1,8 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const youtube = require('./youtube')
 
+let win
 function createWindow () {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
@@ -42,11 +43,11 @@ ipcMain.on('youtube-search-query', async(event, arg) => {
 })
 
 const setProgressBar = () => {
-    mainWin.setProgressBar(2) // intermediate mode
+  win.setProgressBar(2) // intermediate mode
 }
 
 const endProgressBar = () => {
-    mainWin.setProgressBar(-1) // end progress bar
+  win.setProgressBar(-1) // end progress bar
 }
 
 const server = require('./server')
