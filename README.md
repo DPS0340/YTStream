@@ -21,3 +21,7 @@ npm install
 ```bash
 npm start
 ```
+
+## Example
+
+![ytstream](https://user-images.githubusercontent.com/32592965/103560134-9b58a300-4efa-11eb-8130-fc5658425308.gif)
