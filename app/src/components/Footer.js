@@ -3,7 +3,7 @@ import React from 'react'
 export function Contributors () {
   return (
     <div>
-      2020 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
+      2020-2021 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
       Contributors.
       </a>
     </div>
