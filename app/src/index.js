@@ -221,7 +221,10 @@ class Index extends Component {
     return (
       <div>
         <p className='lead'>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis aut eum autem consectetur ratione placeat inventore nihil nemo dolor ex ipsam dolorem recusandae, ipsa nisi labore natus unde sapiente repellendus.
+          YTStream 2021
+        </p>
+        <p className='lead'>
+          Search it!
         </p>
       </div>
     )
