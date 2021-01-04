@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { localServerUrl } from '../constants'
 import AudioPanel from './AudioPanel'
 import Proptypes from 'prop-types'
@@ -19,6 +19,9 @@ export default function MusicThumbnail ({ elem: e }) {
   const audioPanel = showPlayer
     ? <AudioPanel watchUrl={watchUrl} />
     : null
+  useEffect(() => {
+    setShowPlayer(false)
+  }, [e])
   return (
         <div className="row">
           <div className="col-sm ml-0 pl-0" style={{ height: '250px' }}>
