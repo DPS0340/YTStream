@@ -17,6 +17,6 @@ export default function find (keyword) {
     musicQueue[keyword] = [{ query: keyword }]
   } else {
     console.log('cached Keyword')
+    showSearchResult(musicQueue[keyword][0])
   }
-  showSearchResult(musicQueue[keyword][0])
 }

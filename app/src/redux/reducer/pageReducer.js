@@ -1,5 +1,5 @@
 import Index from '../../index'
-import SETCURRENTPAGE from '../action/setCurrentPage'
+import { SETCURRENTPAGE } from '../action/setCurrentPage'
 
 const initialState = {
   page: Index

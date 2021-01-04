@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import showSearchResult from './utils/search/showSearchResult'
 import Content from './hooks/Content'
 import store from './redux/store'
+import setMusicQueue from './redux/action/setMusicQueue'
 import bootstrapjs from 'bootstrap/dist/js/bootstrap.min'
 import bootstrapcss from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import css from '../main.css'
@@ -21,12 +22,14 @@ ipcRenderer.on('youtube-search-result', (_, arg) => {
   const currentKeyword = state.keywordReducer.keyword
   showSearchResult(arg)
   const queryonly = musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1]
-  musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1] = { ...queryonly, ...arg }
+  const nextMusicQueue = { ...musicQueue }
+  nextMusicQueue[currentKeyword][musicQueue[currentKeyword].length - 1] = { ...queryonly, ...arg }
+  store.dispatch(setMusicQueue(nextMusicQueue))
 })
 
 export default function Index () {
   return (
-    <div style={{ 'text-align': 'center' }}>
+    <div style={{ textAlign: 'center' }}>
       <p className='lead'>
         YTStream 2021
       </p>

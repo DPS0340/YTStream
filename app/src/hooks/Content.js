@@ -6,9 +6,12 @@ function Content () {
   console.log(store.getState())
   const [currentPage, setCurrentPage] = useState(createElement(initialPage))
   store.subscribe(() => {
-    const page = store.getState().pageReducer.page
+    const state = store.getState()
+    const page = state.pageReducer.page
+    const params = state.paramsReducer.params
+    console.log('params: ', params)
     console.log('page: ', page)
-    setCurrentPage(createElement(page))
+    setCurrentPage(createElement(page, params))
   })
   return currentPage
 }

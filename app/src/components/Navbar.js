@@ -6,13 +6,13 @@ import Index from '../index'
 import Proptypes from 'prop-types'
 
 export default function Navbar ({ title }) {
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      searchBar()
-    }
-  }
   const setPage = (page) => store.dispatch(setCurrentPage(page))
   const searchFormRef = useRef(null)
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchBar(searchFormRef)
+    }
+  }
   return (
     <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
       <div className='nav navbar-nav navbar-left'>

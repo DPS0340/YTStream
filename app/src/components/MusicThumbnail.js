@@ -16,7 +16,7 @@ export default function MusicThumbnail ({ elem: e }) {
   const showThumbnailStyle = { ...thumbnailStyle, height: '180px' }
   const thumbnailUrl = e.bestThumbnail.url
 
-  const audioPanel = this.state.showPlayer
+  const audioPanel = showPlayer
     ? <AudioPanel watchUrl={watchUrl} />
     : null
   return (
