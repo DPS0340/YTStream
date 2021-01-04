@@ -6,9 +6,9 @@ import searchQuery from '../ipc/searchQuery'
 
 export default function queueFront (query) {
   const state = store.getState()
-  const musicCursor = state.musicCursor
-  const musicQueue = state.musicQueue
-  const currentKeyword = state.keyword
+  const musicCursor = state.musicCursorReducer.musicCursor
+  const musicQueue = state.musicQueueReducer.musicQueue
+  const currentKeyword = state.keywordReducer.keyword
   if (hasFront()) {
     console.log('cached Front')
     showSearchResult(musicQueue[currentKeyword][musicCursor])

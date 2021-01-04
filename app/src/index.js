@@ -7,6 +7,9 @@ import Footer from './components/Footer'
 import showSearchResult from './utils/search/showSearchResult'
 import Content from './hooks/Content'
 import store from './redux/store'
+import bootstrapjs from 'bootstrap/dist/js/bootstrap.min'
+import bootstrapcss from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import css from '../main.css'
 
 export const clearArray = function (arr) {
   arr.splice(0, arr.length)
@@ -14,8 +17,8 @@ export const clearArray = function (arr) {
 
 ipcRenderer.on('youtube-search-result', (_, arg) => {
   const state = store.getState()
-  const musicQueue = state.musicQueue
-  const currentKeyword = state.keyword
+  const musicQueue = state.musicQueueReducer.musicQueue
+  const currentKeyword = state.keywordReducer.keyword
   showSearchResult(arg)
   const queryonly = musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1]
   musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1] = { ...queryonly, ...arg }
@@ -23,7 +26,7 @@ ipcRenderer.on('youtube-search-result', (_, arg) => {
 
 export default function Index () {
   return (
-    <div>
+    <div style={{ 'text-align': 'center' }}>
       <p className='lead'>
         YTStream 2021
       </p>
@@ -38,7 +41,7 @@ const Main = () => {
   return (
     <div id='main'>
       <Navbar id='navbar' url='/' title='YTStream Player' />
-      <Content />
+      <Content id='index'/>
       <Footer id='footer'/>
     </div>
   )

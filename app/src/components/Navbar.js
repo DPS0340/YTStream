@@ -22,7 +22,7 @@ export default function Navbar ({ title }) {
       </div>
       <div className='nav navbar-nav navbar-right'>
         <div className="form-inline">
-          <input ref={searchFormRef} className="form-control bg-dark text-white lead border border-white mr-1" onKeyPress={() => handleKeyPress()} type="search" placeholder="Search Youtube..." aria-label="Search" id="Search-Form" />
+          <input ref={searchFormRef} className="form-control bg-dark text-white lead border border-white mr-1" onKeyPress={(e) => handleKeyPress(e)} type="search" placeholder="Search Youtube..." aria-label="Search" id="Search-Form" />
           <button className="btn btn-primary text-white lead" onClick={() => searchBar(searchFormRef)}>Search!</button>
         </div>
       </div>

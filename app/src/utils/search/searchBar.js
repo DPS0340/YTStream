@@ -1,3 +1,5 @@
+import find from '../ipc/find'
+
 export default function searchBar (formRef) {
   const val = formRef.current.value
   formRef.current.value = ''

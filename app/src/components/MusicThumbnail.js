@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import localServerUrl from '../constants'
+import { localServerUrl } from '../constants'
 import AudioPanel from './AudioPanel'
 import Proptypes from 'prop-types'
 
