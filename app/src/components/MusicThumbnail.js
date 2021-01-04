@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import localServerUrl from '../constants'
 import AudioPanel from './AudioPanel'
+import Proptypes from 'prop-types'
 
-export default function MusicThumbnail () {
+export default function MusicThumbnail ({ elem: e }) {
   const [showPlayer, setShowPlayer] = useState(false)
   const handleClick = () => setShowPlayer(!showPlayer)
-  const e = this.props.elem
   const replacedLink = e.url.split('?v=')[1]
 
   const downloadUrl = `${localServerUrl}/download/${replacedLink}`
@@ -37,4 +37,8 @@ export default function MusicThumbnail () {
           </div>
         </div>
   )
+}
+
+MusicThumbnail.propTypes = {
+  elem: Proptypes.object
 }

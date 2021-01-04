@@ -6,17 +6,16 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import showSearchResult from './utils/search/showSearchResult'
 import Content from './hooks/Content'
+import store from './redux/store'
 
 export const clearArray = function (arr) {
   arr.splice(0, arr.length)
 }
 
-// Redux TODO
-const musicQueue = {}
-const musicCursor = 0
-const currentKeyword = ''
-
 ipcRenderer.on('youtube-search-result', (_, arg) => {
+  const state = store.getState()
+  const musicQueue = state.musicQueue
+  const currentKeyword = state.keyword
   showSearchResult(arg)
   const queryonly = musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1]
   musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1] = { ...queryonly, ...arg }
