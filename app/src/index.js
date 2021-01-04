@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { ipcRenderer } from 'electron'
-window.jQuery = window.$ = require('jquery')
+import PropTypes from 'prop-types'
 
 console.log('Hello World!')
 
@@ -200,20 +200,20 @@ class MusicPrevNext extends Component {
   }
 }
 
-class MusicViewer extends Component {
-  render () {
-    const elems = this.props.result.obj
-    const nextUrl = this.props.result.next
-    console.log(elems)
-    const items = elems.map((e, idx) => <Music elem={e} key={idx}></Music>)
-    items.push(<MusicPrevNext nextUrl={nextUrl} key="next" />)
-    return (
-      <div className="container">
-      <p className="lead">{`${musicQueue[currentKeyword][0].query} ${musicCursor} page`}</p>
-      {items}
-      </div>
-    )
-  }
+const MusicViewer = ({ result: { obj: elems, next: nextUrl } }) => {
+  const items = elems.map((e, idx) => <Music elem={e} key={idx}></Music>)
+  items.push(<MusicPrevNext nextUrl={nextUrl} key="next" />)
+  return (
+    <div className="container">
+    <p className="lead">{`${musicQueue[currentKeyword][0].query} ${musicCursor} page`}</p>
+    {items}
+    </div>
+  )
+}
+
+MusicViewer.propTypes = {
+  children: PropTypes.any,
+  onClickOut: PropTypes.func
 }
 
 class Index extends Component {
@@ -280,33 +280,13 @@ const Navbar = () => {
   )
 }
 
-class Main extends Component {
-  render () {
-    return (
-    <div className='jumbotron bg-light' id='wrapper'>
-
-      {/* <!-- Navigation bar --> */}
-      <div id='navbar-div' />
-
-      {/* <!-- Main div --> */}
-      <div className='vertical-center text-center container' id='main' />
-
-      {/* <!-- Footer --> */}
-      <div id='footer-div' />
+const Main = () => {
+  return (
+    <div id='main'>
+      <Navbar id='navbar' url='/' title='YTStream Player' />
+      <Index id='index'/>
+      <Footer id='footer'/>
     </div>
-    )
-  }
-}
-
-const renderIndex = () => {
-  ReactDOM.render(<Navbar url='/' title='YTStream Player' />,
-    document.getElementById('navbar-div')
-  )
-  ReactDOM.render(<Index />,
-    document.getElementById('main')
-  )
-  ReactDOM.render(<Footer />,
-    document.getElementById('footer-div')
   )
 }
 
@@ -314,7 +294,6 @@ const renderRoot = () => {
   ReactDOM.render(<Main />,
     document.getElementById('root')
   )
-  renderIndex()
 }
 
 renderRoot()
