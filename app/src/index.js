@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { ipcRenderer } from 'electron'
 import PropTypes from 'prop-types'
+import { has } from 'lodash'
 
 console.log('Hello World!')
 
@@ -83,7 +84,7 @@ const showSearchResult = (arg) => {
   })
 }
 
-ipcRenderer.on('youtube-search-result', (event, arg) => {
+ipcRenderer.on('youtube-search-result', (_, arg) => {
   showSearchResult(arg)
   const queryonly = musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1]
   musicQueue[currentKeyword][musicQueue[currentKeyword].length - 1] = { ...queryonly, ...arg }
@@ -159,45 +160,36 @@ class MusicThumbnail extends Component {
   }
 }
 
-class Music extends Component {
-  render () {
-    const e = this.props.elem
-    return (
-      <div className="container">
-          <MusicThumbnail elem={e} />
-
-      </div>
-    )
-  }
+const Music = ({ elem }) => {
+  return (
+    <div className="container">
+        <MusicThumbnail elem={elem} />
+    </div>
+  )
 }
 
-class MusicPrevNext extends Component {
-  render () {
-    const nextUrl = this.props.nextUrl
-    if (hasBack()) {
-      return (
-        <div className="row mb-3">
-          <div className="col-sm text-left">
-            <button className="btn btn-success" onClick={() => { queueBack() }}>Previous Page</button>
-          </div>
-          <div className="col-sm text-right">
-            <button className="btn btn-primary" onClick={() => { queueFront(nextUrl) }}>Next Page</button>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="row mb-3">
-          <div className="col-sm text-left">
-            <button className="btn btn-dark">Previous Page</button>
-          </div>
-          <div className="col-sm text-right">
-            <button className="btn btn-primary" onClick={() => { queueFront(nextUrl) }}>Next Page</button>
-          </div>
-        </div>
-      )
-    }
-  }
+Music.propTypes = {
+  elem: PropTypes.object
+}
+
+const MusicPrevNext = ({ nextUrl }) => {
+  const backButton = <button className="btn btn-success" onClick={() => { queueBack() }}>Previous Page</button>
+  const noBackButton = <button className="btn btn-dark">Previous Page</button>
+  const Button = hasBack ? backButton : noBackButton
+  return (
+    <div className="row mb-3">
+      <div className="col-sm text-left">
+        <Button />
+      </div>
+      <div className="col-sm text-right">
+        <button className="btn btn-primary" onClick={() => { queueFront(nextUrl) }}>Next Page</button>
+      </div>
+    </div>
+  )
+}
+
+MusicPrevNext.propTypes = {
+  nextUrl: PropTypes.string
 }
 
 const MusicViewer = ({ result: { obj: elems, next: nextUrl } }) => {
@@ -212,8 +204,10 @@ const MusicViewer = ({ result: { obj: elems, next: nextUrl } }) => {
 }
 
 MusicViewer.propTypes = {
-  children: PropTypes.any,
-  onClickOut: PropTypes.func
+  result: PropTypes.shape({
+    obj: PropTypes.object,
+    next: PropTypes.string
+  })
 }
 
 class Index extends Component {
@@ -231,31 +225,43 @@ class Index extends Component {
   }
 }
 
+const Contributors = () => (
+    <div>
+      2020 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
+      Contributors.
+      </a>
+    </div>
+)
+
+const License = () => (
+  <a href='https://github.com/DPS0340/YTStream/blob/master/LICENSE' style={{ color: 'inherit', textDecorationColor: 'blue' }}>
+  MIT License
+  </a>
+)
+
+const Contribute = () => (
+  <div>
+    <a href='https://github.com/DPS0340/YTStream' className='badge badge-secondary'>
+      <span className='h4 lead'>
+        GitHub
+      </span>
+    </a>
+    <a href='https://github.com/DPS0340/YTStream' className='badge badge-primary'>
+      <span className='h4 lead'>
+        Contribute us!
+      </span>
+    </a>
+  </div>
+)
+
 const Footer = () => {
   return (
     <footer className='footer font-small blue vertical-center text-center fixed-bottom'>
       <div className='lead'>
-        2020 <a href='https://github.com/DPS0340/YTStream/graphs/contributors'>
-        Contributors.
-        </a>
-        <br />
-        <a href='https://github.com/DPS0340/YTStream/blob/master/LICENSE' style={{ color: 'inherit', textDecorationColor: 'blue' }}>
-          MIT License
-        </a>
-        <br />
+        <Contributors />
+        <License />
       </div>
-      <div>
-        <a href='https://github.com/DPS0340/YTStream' className='badge badge-secondary'>
-          <span className='h4 lead'>
-            GitHub
-          </span>
-        </a>
-        <a href='https://github.com/DPS0340/YTStream' className='badge badge-primary'>
-          <span className='h4 lead'>
-            Contribute us!
-          </span>
-        </a><br></br>
-      </div>
+      <Contribute />
     </footer>
   )
 }
