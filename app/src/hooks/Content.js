@@ -13,6 +13,4 @@ function Content () {
   return currentPage
 }
 
-Content.propTypes = {}
-
 export default Content

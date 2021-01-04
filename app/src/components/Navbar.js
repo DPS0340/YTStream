@@ -3,8 +3,9 @@ import store from '../redux/store'
 import searchBar from '../utils/search/searchBar'
 import setCurrentPage from '../redux/action/setCurrentPage'
 import Index from '../index'
+import Proptypes from 'prop-types'
 
-export default function Navbar () {
+export default function Navbar ({ title }) {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       searchBar()
@@ -16,7 +17,7 @@ export default function Navbar () {
     <nav className='navbar navbar-dark bg-dark' role='navigation' id='navbar'>
       <div className='nav navbar-nav navbar-left'>
         <a className='navbar-brand display-4' href="#" onClick={() => setPage(Index)} id='Navbar-Title'>
-          {this.props.title}
+          {title}
         </a>
       </div>
       <div className='nav navbar-nav navbar-right'>
@@ -27,4 +28,8 @@ export default function Navbar () {
       </div>
     </nav>
   )
+}
+
+Navbar.propTypes = {
+  title: Proptypes.string
 }

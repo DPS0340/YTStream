@@ -1,8 +1,8 @@
-const { Index: IndexPage } = require('../../index')
-const { SETCURRENTPAGE } = require('../action/setCurrentPage')
+import Index from '../../index'
+import SETCURRENTPAGE from '../action/setCurrentPage'
 
 const initialState = {
-  page: IndexPage
+  page: Index
 }
 
 function pageReducer (state = initialState, action) {
