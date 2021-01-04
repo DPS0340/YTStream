@@ -29,7 +29,7 @@ export function Contribute () {
   </div>
 }
 
-export default function footer () {
+export default function Footer () {
   return (
       <footer className='footer font-small blue vertical-center text-center fixed-bottom'>
         <div className='lead'>
