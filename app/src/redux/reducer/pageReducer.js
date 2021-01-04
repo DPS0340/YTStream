@@ -1,4 +1,4 @@
-const { default: IndexPage } = require('../components/Index')
+const { Index: IndexPage } = require('../../index')
 const { SETCURRENTPAGE } = require('../action/setCurrentPage')
 
 const initialState = {
