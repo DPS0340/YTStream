@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import MusicViewer from '../../components/MusicViewer'
 import setPage from '../page/setPage'
 
